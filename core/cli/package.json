@@ -2,7 +2,7 @@
   "name": "@x-fe-cli/cli",
   "version": "0.0.6",
   "description": "x-fe-cli core",
-  "author": "zhicaizhu123 <zhicaizhu123@126.com>",
+  "author": "zhicaizhu <zhicaizhu123@126.com>",
   "homepage": "",
   "license": "ISC",
   "main": "lib/index.js",
@@ -36,5 +36,5 @@
     "semver": "^7.3.5",
     "user-home": "^3.0.0"
   },
-  "gitHead": "a27119229d803be2a49b0854c93b3543a3d88cdd"
+  "gitHead": "799086cebf00fa34a083f1281040c000955e943f"
 }
