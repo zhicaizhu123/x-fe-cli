@@ -1,6 +1,6 @@
 {
   "name": "@x-fe-cli/cli",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "description": "x-fe-cli core",
   "author": "zhicaizhu123 <zhicaizhu123@126.com>",
   "homepage": "",
@@ -23,9 +23,9 @@
     "test": "echo \"Error: run tests from root\" && exit 1"
   },
   "dependencies": {
-    "@x-fe-cli/get-npm-info": "^0.0.8",
-    "@x-fe-cli/init": "^0.0.8",
-    "@x-fe-cli/log": "^0.0.8",
+    "@x-fe-cli/get-npm-info": "^0.0.9",
+    "@x-fe-cli/init": "^0.0.9",
+    "@x-fe-cli/log": "^0.0.9",
     "colors": "^1.4.0",
     "dotenv": "^10.0.0",
     "import-local": "^3.0.2",
