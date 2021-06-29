@@ -1,8 +1,8 @@
 {
-  "name": "get-npm-info",
+  "name": "@x-fe-cli/get-npm-info",
   "version": "0.0.7",
   "description": "> TODO: description",
-  "author": "zhicaizhu <zhicaizhu123@126.com>",
+  "author": "zhicaizhu123 <zhicaizhu123@126.com>",
   "homepage": "",
   "license": "ISC",
   "main": "lib/index.js",
@@ -24,5 +24,5 @@
     "semver": "^7.3.5",
     "url-join": "^4.0.1"
   },
-  "gitHead": "799086cebf00fa34a083f1281040c000955e943f"
+  "gitHead": "754e9908a7ac1ea24f8d70992db4ee6361572a45"
 }
