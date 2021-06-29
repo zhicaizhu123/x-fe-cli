@@ -17,15 +17,15 @@
     "lib"
   ],
   "publishConfig": {
-    "registry": "https://registry.npmjs.org/"
+    "access": "public"
   },
   "scripts": {
     "test": "echo \"Error: run tests from root\" && exit 1"
   },
   "dependencies": {
-    "@x-fe-cli/get-npm-info": "file:../../utils/get-npm-info",
-    "@x-fe-cli/init": "file:../../commands/init",
-    "@x-fe-cli/log": "file:../../utils/log",
+    "@x-fe-cli/get-npm-info": "^0.0.8",
+    "@x-fe-cli/init": "^0.0.8",
+    "@x-fe-cli/log": "^0.0.8",
     "colors": "^1.4.0",
     "dotenv": "^10.0.0",
     "import-local": "^3.0.2",
@@ -36,5 +36,5 @@
     "semver": "^7.3.5",
     "user-home": "^3.0.0"
   },
-  "gitHead": "754e9908a7ac1ea24f8d70992db4ee6361572a45"
+  "gitHead": "23384c6b54cc04b8d075f94067860c986716db85"
 }

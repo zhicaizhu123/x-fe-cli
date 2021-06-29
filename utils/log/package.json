@@ -14,7 +14,7 @@
     "lib"
   ],
   "publishConfig": {
-    "registry": "https://registry.npmjs.org/"
+    "access": "public"
   },
   "scripts": {
     "test": "echo \"Error: run tests from root\" && exit 1"
@@ -22,5 +22,5 @@
   "dependencies": {
     "npmlog": "^4.1.2"
   },
-  "gitHead": "754e9908a7ac1ea24f8d70992db4ee6361572a45"
+  "gitHead": "23384c6b54cc04b8d075f94067860c986716db85"
 }
