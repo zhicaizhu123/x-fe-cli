@@ -1,6 +1,6 @@
 {
   "name": "@x-fe-cli/exec",
-  "version": "0.0.9",
+  "version": "0.0.10",
   "description": "> TODO: description",
   "author": "zhicaizhu123 <zhicaizhu123@126.com>",
   "homepage": "https://github.com/zhicaizhu123/x-fe-cli#readme",
@@ -27,8 +27,8 @@
     "url": "https://github.com/zhicaizhu123/x-fe-cli/issues"
   },
   "dependencies": {
-    "@x-fe-cli/package": "file:../../models/package",
     "@x-fe-cli/log": "file:../../utils/log",
+    "@x-fe-cli/package": "file:../../models/package",
     "@x-fe-cli/utils": "file:../../utils/utils"
   }
 }
