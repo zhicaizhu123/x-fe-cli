@@ -7,44 +7,60 @@ const pkg = require('../package.json')
 const semver = require('semver')
 const log = require('@x-fe-cli/log')
 const init = require('@x-fe-cli/init')
+const exec = require('@x-fe-cli/exec')
 
 const constants = require('./const')
 const colors = require('colors')
 const userHome = require('user-home')
 const pathExists = require('path-exists').sync
-const minimist = require('minimist')
 const dotenv = require('dotenv')
 const { program } = require('commander')
 
 
 async function cli() {
-    
     try {
-        checkPkgVersion()
-        checkNodeVersion()
-        checkRoot()
-        checkUserHome()
-        // checkInputArgs()
-        checkEnv()
-        // await checkGlobalUpdate()
+        await prepare()
         registerCommand()
     } catch(error) {
         log.error(error.message)
+        if (program.debug) {
+            console.log(error)
+        }
     }
     
 }
 
+
+/**
+ * 准备阶段
+ *
+ */
+async function prepare() {
+    checkPkgVersion()
+    checkNodeVersion()
+    checkRoot()
+    checkUserHome()
+    checkEnv()
+    await checkGlobalUpdate()
+}
+
+
+/**
+ * 注册命令
+ *
+ */
 function registerCommand() {
     program
         .name(Object.keys(pkg.bin)[0])
         .usage('<command> [options]')
         .version(pkg.version)
         .option('-d, --debug', '是否开启调试模式', false)
+        .option('-tp, --targetPath <targetPath>', '制定本地调试文件路径', '')
     
     program
-        .command('init [project-name]')
+        .command('init [projectName]')
         .option('-f, --force', '是否强制初始化', false)
-        .action(init)
+        .action(exec)
 
     // 对调试模式监听
     program.on('option:debug', () => {
@@ -55,8 +71,12 @@ function registerCommand() {
             process.env.LOG_LEVEL = 'info'
         }
         log.level = process.env.LOG_LEVEL
+    })
 
-        log.verbose('test debug')
+    // 指定targetPath制定本地调试文件路径
+    program.on('option:targetPath', () => {
+        // 使用环境变量进行解耦
+        process.env.CLI_TARGET_PATH = program.opts().targetPath
     })
 
     // 对未知命令监听
@@ -128,24 +148,6 @@ function checkUserHome() {
 }
 
 /**
- * 检查参数
- *
- */
-function checkInputArgs() {
-    const args = minimist(process.argv.slice(2))
-    checkArgs(args)
-}
-
-function checkArgs(args) {
-    if (args.debug) {
-        process.env.LOG_LEVEL = 'verbose'
-    } else {
-        process.env.LOG_LEVEL = 'info'
-    }
-    log.level = process.env.LOG_LEVEL
-}
-
-/**
  * 检查环境变量
  *
  */
@@ -157,7 +159,6 @@ function checkEnv() {
         })
     }
     createDefaultCliConfig()
-    log.verbose('环境变量 CLI_HOME_PATH ', process.env.CLI_HOME_PATH)
 }
 
 function createDefaultCliConfig() {

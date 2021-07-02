@@ -11,5 +11,5 @@ console.log()
  * @param {*} options 命令参数
  */
 function init(projectName, options) {
-    console.log('init', projectName, options.force)
+    console.log('init', projectName, options.force, process.env.CLI_TARGET_PATH)
 }

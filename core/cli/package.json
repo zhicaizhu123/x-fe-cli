@@ -23,13 +23,13 @@
     "test": "echo \"Error: run tests from root\" && exit 1"
   },
   "dependencies": {
-    "@x-fe-cli/get-npm-info": "^0.0.9",
-    "@x-fe-cli/init": "^0.0.9",
-    "@x-fe-cli/log": "^0.0.9",
+    "@x-fe-cli/get-npm-info": "file:../../utils/get-npm-info",
+    "@x-fe-cli/init": "file:../../commands/init",
+    "@x-fe-cli/log": "file:../../utils/log",
+    "@x-fe-cli/exec": "file:../exec",
     "colors": "^1.4.0",
     "dotenv": "^10.0.0",
     "import-local": "^3.0.2",
-    "minimist": "^1.2.5",
     "npmlog": "^4.1.2",
     "path-exists": "^4.0.0",
     "root-check": "^2.0.0",
