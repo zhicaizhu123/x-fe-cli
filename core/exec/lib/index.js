@@ -1,6 +1,7 @@
 'use strict';
 
 const path = require('path')
+const cp = require('child_process')
 const Package = require('@x-fe-cli/package')
 const log = require('@x-fe-cli/log')
 
@@ -63,15 +64,35 @@ async function exec() {
     if (rootFile) {
         try {
             // 在当前进程中调用
-            require(rootFile).call(null, Array.from(arguments))
+            // require(rootFile).call(null, Array.from(arguments))
             // 在node子进程调用
             // TODO
+            const code = 'console.log(1)'
+            const child = spawn('node', ['-e', code], {
+                cwd: process.cwd(),
+                stdio: 'inherit'
+            })
+            child.on('error', (err) => {
+                log.error(err.message)
+                process.exit(1)
+            })
+            child.on('exit', (e) => {
+                const msg = e === 0 ? '命令执行成功' : `命令执行失败，错误码：${e}`
+                log.verbose(msg)
+                process.exit(e)
+            })
         } catch(err) {
             log.error(err.message)
         }
     }
-    
-    
+}
+
+// 兼容window/macos
+function spawn(command, args, options = {}) {
+    const win32 = process.platform === 'win32'
+    const cmd = win32 ? 'cmd' : command
+    const cmdArgs = win32 ? ['/c'].concat(command, args) : args
+    return cp.spawn(cmd, cmdArgs, options)
 }
 
 
