@@ -12,10 +12,16 @@ const SETTINGS = {
 const CACHE_DIR = 'dependencies'
 
 async function exec() {
+    // 1. targetPath -> modulePath
+    // 2. modulePath -> Package(npm模块)
+    // 3. Package.getRootFilePath(获取入口文件)
+    // 4. Package.update/Package.install
+    // 封装 -> 复用
+
     // 制定本地调试文件路径
     let targetPath = process.env.CLI_TARGET_PATH
     const homePath = process.env.CLI_HOME_PATH
-    let storeDir = ''
+    let storeDir = '' // 缓存路径，如果这个参数不为控制，则说明使用的是缓存模式
     let pkg = ''
     log.verbose('targetPath', targetPath)
     log.verbose('homePath', homePath)
@@ -49,24 +55,23 @@ async function exec() {
         pkg = new Package({
             targetPath,
             packageName,
-            storeDir,
             packageVersion
         })
     }
     // 3. Package.getRootFilePath(获取入口文件)
     const rootFile = pkg.getRootFilePath()
-    console.log('rootFile', rootFile)
     if (rootFile) {
-        require(rootFile).apply(null, arguments)
+        try {
+            // 在当前进程中调用
+            require(rootFile).call(null, Array.from(arguments))
+            // 在node子进程调用
+            // TODO
+        } catch(err) {
+            log.error(err.message)
+        }
     }
     
-    // 1. targetPath -> modulePath
-    // 2. modulePath -> Package(npm模块)
-    // 3. Package.getRootFilePath(获取入口文件)
-    // 4. Package.update/Package.install
     
-
-    // 封装 -> 复用
 }
 
 

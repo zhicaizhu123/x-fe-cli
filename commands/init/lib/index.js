@@ -1,15 +1,29 @@
 'use strict';
 
-module.exports = init
+const Command = require('@x-fe-cli/command')
+const log = require('@x-fe-cli/log')
 
-console.log()
+class InitCommand extends Command {
+    init() {
+        const opts = this._cmd.opts()
+        this.projectName = this._argv[0] || ''
+        this.force = !!opts.force
+        log.verbose('projectName', this.projectName)
+        log.verbose('force', this.force)
+    }
+
+    exec() {
+        
+    }
+}
 
 /**
  * 初始化项目
  *
- * @param {*} projectName 项目名称
- * @param {*} options 命令参数
  */
-function init(projectName, options) {
-    console.log('init', projectName, options.force, process.env.CLI_TARGET_PATH)
+function init(argv) {
+    new InitCommand(argv)
 }
+
+module.exports = init
+module.exports.InitCommand = InitCommand

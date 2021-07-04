@@ -19,5 +19,9 @@
   "scripts": {
     "test": "echo \"Error: run tests from root\" && exit 1"
   },
-  "gitHead": "23384c6b54cc04b8d075f94067860c986716db85"
+  "gitHead": "23384c6b54cc04b8d075f94067860c986716db85",
+  "dependencies": {
+    "@x-fe-cli/command": "file:../../models/command",
+    "@x-fe-cli/log": "file:../../utils/log"
+  }
 }

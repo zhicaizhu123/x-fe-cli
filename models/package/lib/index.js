@@ -31,6 +31,7 @@ class Package {
     async prepare() {
         // 判断缓存目录是否存在
         if (this.storeDir && !pathExists(this.storeDir)) {
+            // 缓存模式下，缓存目录不存在则需要手动创建
             fse.mkdirpSync(this.storeDir)
         }
         if (this.packageVersion === 'latest') {
@@ -101,6 +102,7 @@ class Package {
         }
     }
 
+    // 获取package模块的入口文件
     getRootFilePath() {
         // 1. 获取package.json所在的目录 - pkg-dir
         function _getRootFilePath(targetPath) {
@@ -108,16 +110,16 @@ class Package {
             if (dir) {
                 // 2. 读取package.json - require()
                 const pkgFile = require(path.resolve(dir, 'package.json'))
-                // 3. main/lib - path
-                if (pkgFile && pkgFile.main || pkgFile.lib){
+                // 3. 获取入口文件 main/lib - path
+                if (pkgFile && pkgFile.main){
                     // 4. 路径的兼容（macos/windows）
                     return formatPath(path.resolve(dir, pkgFile.main))
                 }
-                
             }
             return null
         }
         if (this.storeDir) {
+            // 如果是缓存模式
             return _getRootFilePath(this.cacheFilePath)
         } else {
             return _getRootFilePath(this.targetPath)

@@ -1,20 +1,17 @@
 'use strict';
 
-module.exports = cli; 
-
 const path = require('path')
-const pkg = require('../package.json')
-const semver = require('semver')
-const log = require('@x-fe-cli/log')
-const init = require('@x-fe-cli/init')
-const exec = require('@x-fe-cli/exec')
 
-const constants = require('./const')
+const semver = require('semver')
 const colors = require('colors')
 const userHome = require('user-home')
 const pathExists = require('path-exists').sync
 const dotenv = require('dotenv')
 const { program } = require('commander')
+const log = require('@x-fe-cli/log')
+const exec = require('@x-fe-cli/exec')
+const pkg = require('../package.json')
+const constants = require('./const')
 
 
 async function cli() {
@@ -27,7 +24,6 @@ async function cli() {
             console.log(error)
         }
     }
-    
 }
 
 
@@ -37,8 +33,7 @@ async function cli() {
  */
 async function prepare() {
     checkPkgVersion()
-    checkNodeVersion()
-    checkRoot()
+    await checkRoot()
     checkUserHome()
     checkEnv()
     await checkGlobalUpdate()
@@ -94,7 +89,6 @@ function registerCommand() {
     // 参数长度小于1时，输出帮助信息
     if (program.args && program.args.length < 1) {
         program.outputHelp()
-        console.log()
     }
 }
 
@@ -109,31 +103,12 @@ function checkPkgVersion() {
 
 
 /**
- * 检查Node版本号
- *
- */
-function checkNodeVersion() {
-    // 1. 获取当前node版本号
-    const currentVersion = process.version
-    log.info('当前node版本号：', currentVersion)
-
-    // 2. 比对最低版本号
-    const lowestNodeVersion = constants.LOWEST_NODE_VERSION
-    
-    if (!semver.gte(currentVersion, lowestNodeVersion)) {
-        throw new Error(colors.red(`x-fe-cli 需要安装v${lowestNodeVersion}以上版本的 Node.js， 当前Node.js版本为${currentVersion}`))
-    }
-}
-
-
-/**
  * 判断root并降级措施
  *
  */
-function checkRoot() {
-    import('root-check').then((rootCheck) => {
-        rootCheck.default()
-    })
+async function checkRoot() {
+    const rootCheck = await import('root-check')
+    rootCheck.default()
 }
 
 
@@ -186,3 +161,5 @@ async function checkGlobalUpdate() {
         log.error(`获取 ${npmName} npm包版本错误：`, err.message)
     }
 }
+
+module.exports = cli; 
