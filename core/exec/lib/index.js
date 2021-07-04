@@ -67,7 +67,17 @@ async function exec() {
             // require(rootFile).call(null, Array.from(arguments))
             // 在node子进程调用
             // TODO
-            const code = 'console.log(1)'
+            const args = Array.from(arguments)
+            const cmd = args[args.length - 1]
+            const o = Object.create(null)
+            // 对cmd进行瘦身，减少无用参数
+            Object.keys(cmd).forEach(key => {
+                if (cmd.hasOwnProperty(key) && !key.startsWith('_') && key !== 'parent') {
+                    o[key] = cmd[key]
+                }
+            })
+            args[args.length -1] = o
+            const code = `require('${rootFile}').call(null, ${JSON.stringify(args)})`
             const child = spawn('node', ['-e', code], {
                 cwd: process.cwd(),
                 stdio: 'inherit'
